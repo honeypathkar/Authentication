@@ -9,12 +9,13 @@ function LoginScreen() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    console.log(`Field Name: ${name}, Field Value: ${value}`); // Debugging log
     setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
+    console.log("Form Data:", formData); // Form data should now log correctly
   };
 
   return (
@@ -63,7 +64,7 @@ function LoginScreen() {
           Login
         </button>
         <div className="flex justify-center mt-5">
-          Don't Have an Account ? &nbsp;
+          Don't Have an Account? &nbsp;
           <Link to="/register" className="text-blue-500">
             Create Account
           </Link>
