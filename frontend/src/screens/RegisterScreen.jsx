@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaCamera, FaTimes } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 function RegisterScreen() {
   const [formData, setFormData] = useState({
@@ -139,8 +140,14 @@ function RegisterScreen() {
           type="submit"
           className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200"
         >
-          Submit
+          Create Account
         </button>
+        <div className="flex justify-center mt-5">
+          Don't Have an Account ? &nbsp;
+          <Link to="/login" className="text-blue-500">
+            Login
+          </Link>
+        </div>
       </form>
     </div>
   );
