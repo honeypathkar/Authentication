@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaCamera, FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function RegisterScreen() {
   const [formData, setFormData] = useState({
@@ -11,6 +11,7 @@ function RegisterScreen() {
     image: null,
   });
   const [imagePreview, setImagePreview] = useState(null);
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -49,7 +50,8 @@ function RegisterScreen() {
 
       const result = await response.json();
       if (response.ok) {
-        alert("User registered successfully!");
+        // alert("User registered successfully!");
+        navigate("/home", { state: { user: formData } });
       } else {
         console.error(result.error);
         alert("Failed to register user.");
