@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 
 mongoose
-  .connect("mongodb://127.0.0.1/27017/authentication", {
+  .connect("mongodb://127.0.0.1:27017/authentication", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("Connect to MongoDB successfull"))
-  .catch((err) => console.log(err.errmsg));
+  .then(() => console.log("Connected to MongoDB successfully"))
+  .catch((err) => console.error("Error connecting to MongoDB:", err));
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -27,8 +27,12 @@ const userSchema = mongoose.Schema({
   },
   image: {
     type: String,
+    required: false, // Optional if not always provided
+  },
+  contentType: {
+    type: String,
     required: true,
   },
 });
 
-module.exports = mongoose.model("user", userSchema);
+module.exports = mongoose.model("User", userSchema);

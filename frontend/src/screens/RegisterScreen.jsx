@@ -30,9 +30,34 @@ function RegisterScreen() {
     setImagePreview(null);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
+    const data = new FormData();
+    data.append("name", formData.name);
+    data.append("username", formData.username);
+    data.append("email", formData.email);
+    data.append("password", formData.password);
+    if (formData.image) {
+      data.append("image", formData.image);
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/userRegister", {
+        method: "POST",
+        body: data,
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert("User registered successfully!");
+      } else {
+        console.error(result.error);
+        alert("Failed to register user.");
+      }
+    } catch (err) {
+      console.error("Error submitting the form:", err);
+      alert("Error occurred. Try again later.");
+    }
   };
 
   return (
@@ -62,14 +87,12 @@ function RegisterScreen() {
             </div>
           ) : (
             <div className="relative w-24 h-24 border-2 border-dashed border-gray-300 rounded-full flex items-center justify-center">
-              <label
-                htmlFor="imageUpload"
-                className="cursor-pointer text-gray-500"
-              >
+              <label htmlFor="image" className="cursor-pointer text-gray-500">
                 <FaCamera size={24} />
               </label>
               <input
-                id="imageUpload"
+                id="image"
+                name="image"
                 type="file"
                 accept="image/*"
                 className="hidden"
@@ -143,7 +166,7 @@ function RegisterScreen() {
           Create Account
         </button>
         <div className="flex justify-center mt-5">
-          Don't Have an Account ? &nbsp;
+          Already have an account?&nbsp;
           <Link to="/login" className="text-blue-500">
             Login
           </Link>
