@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function LoginScreen() {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -13,9 +15,26 @@ function LoginScreen() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData); // Form data should now log correctly
+    try {
+      const response = await fetch("http://localhost:5000/userLogin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const result = await response.json();
+      if (response.ok) {
+        navigate("/home", { state: { user: formData } });
+      } else {
+        alert(result.error || "Login failed");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert("Login failed. Please try again later.");
+    }
   };
 
   return (
