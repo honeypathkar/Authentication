@@ -20,14 +20,14 @@ function LoginScreen() {
     try {
       const response = await fetch("http://localhost:5000/userLogin", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        credentials: "include", // Important for cookies
         body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json" },
       });
       const result = await response.json();
+      console.log(result);
       if (response.ok) {
-        navigate("/home", { state: { user: formData } });
+        navigate("/home", { state: { user: formData }, replace: true });
       } else {
         alert(result.error || "Login failed");
       }

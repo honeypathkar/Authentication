@@ -51,7 +51,7 @@ function RegisterScreen() {
       const result = await response.json();
       if (response.ok) {
         // alert("User registered successfully!");
-        navigate("/home", { state: { user: formData } });
+        navigate("/login");
       } else {
         console.error(result.error);
         alert("Failed to register user.");
