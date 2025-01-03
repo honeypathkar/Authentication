@@ -142,6 +142,17 @@ app.get("/alluser", async (req, res) => {
   }
 });
 
+//logout route
+app.post("/logout", (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "Strict",
+    path: "/",
+  });
+  res.status(200).json({ message: "Logout successful" });
+});
+
 // Start Server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 function LoginScreen() {
   const [formData, setFormData] = useState({
@@ -27,7 +26,11 @@ function LoginScreen() {
       const result = await response.json();
       console.log(result);
       if (response.ok) {
+        // Navigate to home page after successful login
         navigate("/home", { state: { user: formData }, replace: true });
+
+        // Clear history to prevent going back to the login screen
+        window.history.pushState(null, document.title, location.href);
       } else {
         alert(result.error || "Login failed");
       }
@@ -36,6 +39,21 @@ function LoginScreen() {
       alert("Login failed. Please try again later.");
     }
   };
+
+  useEffect(() => {
+    // Prevent going back to the login screen after login
+    window.history.pushState(null, document.title, location.href);
+    window.addEventListener("popstate", function (event) {
+      window.history.pushState(null, document.title, location.href);
+    });
+
+    // Cleanup the event listener when component unmounts
+    return () => {
+      window.removeEventListener("popstate", function (event) {
+        window.history.pushState(null, document.title, location.href);
+      });
+    };
+  }, []);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
