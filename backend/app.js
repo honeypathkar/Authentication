@@ -44,9 +44,17 @@ app.post("/userRegister", upload.single("image"), async (req, res) => {
   try {
     const { name, username, email, password } = req.body;
 
+    // Check for existing user
+    const user = await UserModel.findOne({ username });
+    if (user) {
+      return res.status(400).json({ error: "User already exists" });
+    }
+
     // Validate input fields
     if (!name || !username || !email || !password || !req.file) {
-      return res.status(400).json({ error: "All fields are required" });
+      return res
+        .status(400)
+        .json({ error: "All fields, including an image, are required" });
     }
 
     // Hash password
@@ -67,10 +75,7 @@ app.post("/userRegister", upload.single("image"), async (req, res) => {
     await newUser.save();
 
     // Generate JWT token
-    const token = jwt.sign(
-      { email, userId: newUser._id },
-      process.env.JWT_SECRET || "shonty"
-    );
+    const token = jwt.sign({ email, userId: newUser._id }, "shonty");
 
     // Set cookie with token
     res.cookie("token", token, {

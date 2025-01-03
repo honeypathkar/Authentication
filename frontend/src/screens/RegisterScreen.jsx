@@ -54,6 +54,8 @@ function RegisterScreen() {
         // alert("User registered successfully!");
         navigate("/login");
         toast.success("Register Successfully");
+      } else if (response.status === 400) {
+        toast.error("User already exists");
       } else {
         console.error(result.error);
         // alert("Failed to register user.");
@@ -102,6 +104,7 @@ function RegisterScreen() {
                 type="file"
                 accept="image/*"
                 className="hidden"
+                required
                 onChange={handleImageChange}
               />
             </div>
@@ -116,6 +119,7 @@ function RegisterScreen() {
             name="name"
             placeholder="Enter your name"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
             value={formData.name}
             onChange={handleInputChange}
           />
@@ -129,6 +133,7 @@ function RegisterScreen() {
           <input
             type="text"
             name="username"
+            required
             placeholder="Enter your username"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={formData.username}
@@ -142,6 +147,7 @@ function RegisterScreen() {
           <input
             type="email"
             name="email"
+            required
             placeholder="Enter your email"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={formData.email}
@@ -156,6 +162,7 @@ function RegisterScreen() {
           </label>
           <input
             type="password"
+            required
             name="password"
             placeholder="Enter your password"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
