@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaCamera, FaTimes } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function RegisterScreen() {
   const [formData, setFormData] = useState({
@@ -52,13 +53,16 @@ function RegisterScreen() {
       if (response.ok) {
         // alert("User registered successfully!");
         navigate("/login");
+        toast.success("Register Successfully");
       } else {
         console.error(result.error);
-        alert("Failed to register user.");
+        // alert("Failed to register user.");
+        toast.error("Failed to register user");
       }
     } catch (err) {
       console.error("Error submitting the form:", err);
-      alert("Error occurred. Try again later.");
+      // alert("Error occurred. Try again later.");
+      toast.error("Error occurred. Try again later.");
     }
   };
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function HomeScreen() {
   const [user, setUser] = useState(null);
@@ -40,12 +41,15 @@ export default function HomeScreen() {
         console.log(result.message);
         // Redirect to login page after successful logout
         navigate("/login");
+        toast.success("Logout Successfull");
       } else {
-        alert("Error logging out");
+        // alert("Error logging out");
+        toast.error("Error logging out");
       }
     } catch (error) {
       console.error("Error during logout:", error);
-      alert("Error logging out. Please try again.");
+      // alert("Error logging out. Please try again.");
+      toast.error("Error logging out. Please try again.");
     }
   };
 

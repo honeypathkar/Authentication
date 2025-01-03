@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function LoginScreen() {
   const [formData, setFormData] = useState({
@@ -28,15 +29,18 @@ function LoginScreen() {
       if (response.ok) {
         // Navigate to home page after successful login
         navigate("/home", { state: { user: formData }, replace: true });
+        toast.success("Login Successfull");
 
         // Clear history to prevent going back to the login screen
         window.history.pushState(null, document.title, location.href);
       } else {
-        alert(result.error || "Login failed");
+        // alert(result.error || "Login failed");
+        toast.error(result.error || "Login Failed");
       }
     } catch (error) {
       console.error("Error during login:", error);
-      alert("Login failed. Please try again later.");
+      // alert("Login failed. Please try again later.");
+      toast.error("Login failed. Please try again later.");
     }
   };
 

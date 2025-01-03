@@ -4,11 +4,13 @@ import RegisterScreen from "./screens/RegisterScreen";
 import LoginScreen from "./screens/LoginScreen";
 import { Navigate } from "react-router-dom";
 import HomeScreen from "./screens/HomeScreen";
+import Alert from "./components/Alert";
 
 export default function App() {
   return (
     <Router>
       <div>
+        <Alert />
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<LoginScreen />} />
